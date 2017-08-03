@@ -1,0 +1,23 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="entityParser" class="co.uk.jpmc.report.EntityParser"/>
+	<bean id="inTradeRating" class=" co.uk.jpmc.report.InTradeRatingReportGenerator" />
+	<bean id="outTradeRating" class="co.uk.jpmc.report.OutTradeRatingReportGenerator"/>
+	<bean id="outgoingTrade" class="co.uk.jpmc.report.OutgoingReportGenerator"/>
+	<bean id="incomingTrade" class="co.uk.jpmc.report.IncomingReportGenerator"/>
+	
+	<bean id="tradeReport" class=" co.uk.jpmc.report.impl.TradeReportImpl">
+		<property name="inTrade"  ref="incomingTrade"/>
+		<property name="inTradeRating"  ref="inTradeRating"/>
+		<property name="outTradeRating"  ref="outTradeRating"/>
+		<property name="outTrade"  ref="outgoingTrade"/>
+	</bean>
+	
+	<bean id="loader" class="co.uk.jpmc.report.LoadEntity">
+		<property name="entityParser" ref="entityParser" />
+		<property name="report" ref="tradeReport" />
+	</bean>
+
+</beans>
